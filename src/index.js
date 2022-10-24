@@ -6,16 +6,32 @@ import './index.css';
 import reportWebVitals from './reportWebVitals';
 // import Auth0ProviderWithHistory from './auth/auth0-provider-with-history';
 import { Auth0Provider } from '@auth0/auth0-react';
+import history from "./utils/history";
+import { getConfig } from "./config";
+
+const onRedirectCallback = (appState) => {
+  history.push(
+    appState && appState.returnTo ? appState.returnTo : window.location.pathname
+  );
+};
+
+// Please see https://auth0.github.io/auth0-react/interfaces/Auth0ProviderOptions.html
+// for a full list of the available properties on the provider
+const config = getConfig();
+
+const providerConfig = {
+  domain: config.domain,
+  clientId: config.clientId,
+  redirectUri: window.location.origin,
+  onRedirectCallback,
+};
 
 const root = ReactDOM.createRoot(document.getElementById('root'));
 root.render(
   <React.StrictMode>
     <BrowserRouter>
       {/* <Auth0ProviderWithHistory> */}
-      <Auth0Provider
-        domain="dev-rrl8ahvcv4tyav0p.us.auth0.com"
-        clientId="xQr1Zc5jCTlHcwiwSa1X0CTiu1ooIDaP"
-        redirectUri={window.location.origin}
+      <Auth0Provider {...providerConfig}
       >
         <App />
       </Auth0Provider>
