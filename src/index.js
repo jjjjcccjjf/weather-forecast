@@ -1,7 +1,7 @@
 import React from 'react';
 import ReactDOM from 'react-dom/client';
 import App from './App';
-import { BrowserRouter } from 'react-router-dom';
+import { BrowserRouter, useNavigate } from 'react-router-dom';
 import './index.css';
 import reportWebVitals from './reportWebVitals';
 // import Auth0ProviderWithHistory from './auth/auth0-provider-with-history';
@@ -9,9 +9,20 @@ import { Auth0Provider } from '@auth0/auth0-react';
 import history from "./utils/history";
 import { getConfig } from "./config";
 
-const onRedirectCallback = (appState) => {
-  history.push(
-    appState && appState.returnTo ? appState.returnTo : window.location.pathname
+const Auth0ProviderWithRedirectCallback = ({
+  children,
+  ...props
+}) => {
+  const navigate = useNavigate();
+
+  const onRedirectCallback = (appState) => {
+    navigate((appState && appState.returnTo) || window.location.pathname);
+  };
+
+  return (
+    <Auth0Provider onRedirectCallback={onRedirectCallback} {...props}>
+      {children}
+    </Auth0Provider>
   );
 };
 
@@ -23,7 +34,6 @@ const providerConfig = {
   domain: config.domain,
   clientId: config.clientId,
   redirectUri: window.location.origin,
-  onRedirectCallback,
 };
 
 const root = ReactDOM.createRoot(document.getElementById('root'));
@@ -31,10 +41,10 @@ root.render(
   <React.StrictMode>
     <BrowserRouter>
       {/* <Auth0ProviderWithHistory> */}
-      <Auth0Provider {...providerConfig}
+      <Auth0ProviderWithRedirectCallback {...providerConfig}
       >
         <App />
-      </Auth0Provider>
+      </Auth0ProviderWithRedirectCallback>
       {/* </Auth0ProviderWithHistory> */}
     </BrowserRouter>
   </React.StrictMode>
