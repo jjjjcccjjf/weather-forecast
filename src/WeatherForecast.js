@@ -1,11 +1,20 @@
 import { useState, useEffect } from "react"
-import { Link } from "react-router-dom"
+import { Link, useNavigate } from "react-router-dom"
 import Loader from "./Loader"
+import "./WeatherForecast.css"
+import { useAuth0 } from "@auth0/auth0-react"
 
 export default function WeatherForecast({ searchQuery }) {
     const [weather, setWeather] = useState({})
     const key = "5c9d2b871d7e4476ad884441222410"
     const [isLoading, setIsLoading] = useState(false);
+    const navigate = useNavigate()
+    const { isAuthenticated } = useAuth0()
+    useEffect(() => {
+        if (!isAuthenticated) {
+            navigate("/")
+        }
+    }, [])
 
     useEffect(() => {
         if (searchQuery) {
@@ -26,7 +35,7 @@ export default function WeatherForecast({ searchQuery }) {
     }, [searchQuery])
 
     const EmptyWeather = (
-        <div>No matching location found</div>
+        <div className="text-4xl">No matching location found</div>
     )
 
     return (
@@ -35,35 +44,38 @@ export default function WeatherForecast({ searchQuery }) {
                 isLoading ?
                     <><Loader></Loader></> :
                     <>
-                        <div>{Object.keys(weather).length !== 0 ?
-                            <div>
-                                <img src={weather.current.condition.icon ?? null} alt="..."></img>
-                                <table className="table-auto">
+                        {Object.keys(weather).length !== 0 ?
+                            <div className="grid place-content-start">
+                                <img className="p-2 mb-6 place-self-end shadow-lg border border-teal-900 rounded-full" src={weather.current.condition.icon ?? null} alt="..."></img>
+                                <table className="table-auto border-collapse border border-slate-500 w-[50rem]">
                                     <thead>
-                                        <tr>
-                                            <th className="">Date</th>
+                                        <tr className="bg-blue-700/10" >
+                                            <th className="text-left" colSpan={5}>Date</th>
                                         </tr>
-                                        <tr>
-                                            <th className="">(mm/dd/yyyy)</th>
-                                            <th className="">Temp(F)</th>
-                                            <th className="">Description</th>
-                                            <th className="">Pressure</th>
-                                            <th className="">Humidity</th>
+                                        <tr className="bg-blue-700/30">
+                                            <th className="text-left">(mm/dd/yyyy)</th>
+                                            <th className="text-left">Temp(F)</th>
+                                            <th className="sm:hidden xl:table-cell text-left">Description</th>
+                                            <th className="sm:hidden xl:table-cell text-left">Pressure</th>
+                                            <th className="sm:hidden xl:table-cell text-left">Humidity</th>
                                         </tr>
                                     </thead>
                                     <tbody>
-                                        <tr>
-                                            <td>{weather.location.localtime ?? null}</td>
+                                        <tr className="bg-blue-700/50">
+                                            <td>{weather.location.localtime ? (new Date(weather.location.localtime)).toLocaleDateString('en-US') : null}</td>
                                             <td>{weather.current.temp_f ?? null}</td>
-                                            <td>{weather.current.condition.text ?? null}</td>
-                                            <td>{weather.current.pressure_mb ?? null}</td>
-                                            <td>{weather.current.humidity ?? null}</td>
+                                            <td className="sm:hidden xl:table-cell">{weather.current.condition.text ?? null}</td>
+                                            <td className="sm:hidden xl:table-cell">{weather.current.pressure_mb ?? null}</td>
+                                            <td className="sm:hidden xl:table-cell">{weather.current.humidity ?? null}</td>
                                         </tr>
                                     </tbody>
                                 </table>
-                                <Link to="/search">Back</Link>
+                                <div className="grid grid-flow-col justify-between">
+
+                                    <Link to="/search" className="mt-8 rounded-3xl text-xl font-semibold bg-teal-400/80 hover:bg-black/80 hover:text-teal-400 hover:fill-teal-300 shadow-xl w-40 h-14 flex flex-row place-items-center place-content-center">Back</Link>
+                                    <p className="mt-8 rounded-3xl text-xl flex flex-row place-self-center tracking-wide">Searching weather of&nbsp;<span className="capitalize font-extrabold">{searchQuery}</span></p>
+                                </div>
                             </div> : EmptyWeather}
-                        </div>
                     </>
             }
 

@@ -23,13 +23,14 @@ function App() {
   return (
     <div className=" font-serif">
       <Nav></Nav>
-      <main className="h-screen grid place-items-center bg-fixed" Style="background-image: url('/bg.jpg')">
+      <main className="h-screen grid place-items-center bg-fixed" style={{"backgroundImage": "url('/bg.jpg')"}}>
         <Routes>
           <Route path="/" element={<Login />} />
           {/* <Route path="search/" element={<ProtectedRoute component={Search} rest={searchArgs} />} />
           <Route path="weather-forecast/" element={<ProtectedRoute rest={weatherArgs} component={WeatherForecast} />} /> */}
           <Route path="search/" element={<Search {...searchArgs} />} />
           <Route path="weather-forecast/" element={<WeatherForecast {...weatherArgs} />} />
+          <Route path="*" element={<div className="text-6xl">404</div>}/>
         </Routes>
       </main>
 

@@ -22,12 +22,12 @@ export default function Nav() {
     return <>
         <header>
             <nav className="shadow-xl">
-                <ul className="absolute top-0 w-screen h-20border-b border-cyan-400/40 shadow-lg flex justify-between">
-                    <li className="py-2"><NavLink to="/" className="px-10 flex "><img className="object-scale-down" src="/logo.png" width={60} height={60} alt="..."></img><p className="text-2xl px-2 place-content-center grid font-bold tracking-wide">WEATHER FORECAST APP</p></NavLink></li>
+                <ul className="absolute top-0 w-screen h-20border-b border-cyan-400/40 shadow-lg flex justify-around">
+                    <li className="py-2"><NavLink to="/" className=" flex "><img className="object-scale-down" src="/logo.png" width={60} height={60} alt="..."></img><p className="text-2xl sm:hidden xl:grid px-2 place-content-center grid font-bold tracking-wide">WEATHER FORECAST APP</p></NavLink></li>
                     {isAuthenticated && <>
-                        <li className="py-7 px-10 text-lg"><NavLink style={({ isActive }) => isActive ? { fontWeight: "900" } : undefined} to="/search">Search</NavLink></li>
-                        <li className="py-7 px-10 text-lg"><NavLink style={({ isActive }) => isActive ? { fontWeight: "900" } : undefined} to="/weather-forecast">Weather Forecast</NavLink></li>
-                        <li className="py-7 px-10 text-lg"><LogoutButton></LogoutButton></li>
+                        <li className="py-7  text-lg"><NavLink style={({ isActive }) => isActive ? { fontWeight: "900" } : undefined} to="/search">Search</NavLink></li>
+                        <li className="py-7  text-lg"><NavLink style={({ isActive }) => isActive ? { fontWeight: "900" } : undefined} to="/weather-forecast">Weather Forecast</NavLink></li>
+                        <li className="py-7  text-lg"><LogoutButton></LogoutButton></li>
                     </>}
                 </ul>
             </nav>
