@@ -1,10 +1,11 @@
-import { useState, useEffect } from "react"
+import { useState } from "react"
 import { Routes, Route } from "react-router-dom";
-import { useAuth0, withAuthenticationRequired } from "@auth0/auth0-react";
+import { useAuth0 } from "@auth0/auth0-react";
 import Nav from "./Nav"
 import Login from "./Login";
 import Search from "./Search";
 import WeatherForecast from "./WeatherForecast";
+import "./App.css"
 
 // const ProtectedRoute = (props) => {
 //   const Component = withAuthenticationRequired(props.component, ...props.args);
@@ -20,10 +21,9 @@ function App() {
   const weatherArgs = { searchQuery }
 
   return (
-    <>
-
+    <div className=" font-serif">
       <Nav></Nav>
-      <main className="container mx-auto h-screen grid place-items-center">
+      <main className="h-screen grid place-items-center bg-fixed" Style="background-image: url('/bg.jpg')">
         <Routes>
           <Route path="/" element={<Login />} />
           {/* <Route path="search/" element={<ProtectedRoute component={Search} rest={searchArgs} />} />
@@ -33,7 +33,7 @@ function App() {
         </Routes>
       </main>
 
-    </>
+    </div>
   );
 }
 

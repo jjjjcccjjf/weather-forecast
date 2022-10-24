@@ -1,5 +1,6 @@
 import { useState, useEffect } from "react"
 import { Link } from "react-router-dom"
+import Loader from "./Loader"
 
 export default function WeatherForecast({ searchQuery }) {
     const [weather, setWeather] = useState({})
@@ -18,7 +19,9 @@ export default function WeatherForecast({ searchQuery }) {
                 })
                 .catch(e => {
                     console.log(e.message)
-                }).finally(() => { setIsLoading(false) })
+                }).finally(() => {
+                    setIsLoading(false)
+                })
         }
     }, [searchQuery])
 
@@ -30,7 +33,7 @@ export default function WeatherForecast({ searchQuery }) {
         <section>
             {
                 isLoading ?
-                    <><div>Loading... Please wait.</div></> :
+                    <><Loader></Loader></> :
                     <>
                         <div>{Object.keys(weather).length !== 0 ?
                             <div>
