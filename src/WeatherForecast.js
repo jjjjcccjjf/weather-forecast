@@ -7,7 +7,7 @@ import { useAuth0 } from "@auth0/auth0-react"
 export default function WeatherForecast({ searchQuery }) {
     const [weather, setWeather] = useState({})
     // TODO: Store API key to environment variables!
-    const key = "5c9d2b871d7e4476ad884441222410"
+    const key = "01427ffe9bc348ddaea232318222410"
     const [isLoading, setIsLoading] = useState(false);
 
     // Force redirect for unauthenticated users
