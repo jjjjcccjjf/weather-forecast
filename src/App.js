@@ -6,8 +6,10 @@ import Login from "./Login";
 import Search from "./Search";
 import WeatherForecast from "./WeatherForecast";
 import "./App.css"
+// TODO: Refactor each component to a separate folder
 
 function App() {
+  // TODO: use AppContext or Redux for potential scaling measures for handling our application state
   const [searchQuery, setSearchQuery] = useState("")
   const { user } = useAuth0();
 

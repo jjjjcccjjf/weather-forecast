@@ -52,6 +52,7 @@ export default function WeatherForecast({ searchQuery }) {
                     <>
                         {Object.keys(weather).length !== 0 ?
                             <div className="grid place-content-start">
+                                {/* TODO: Add lazyloading */}
                                 <img className="p-2 mb-6 place-self-end shadow-lg border border-teal-900 rounded-full" src={weather.current.condition.icon ?? null} alt="..."></img>
                                 <table className="table-auto border-collapse border border-slate-500 w-[50rem]">
                                     <thead>
