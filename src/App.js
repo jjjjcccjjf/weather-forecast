@@ -8,11 +8,13 @@ function App() {
   return (
     <BrowserRouter>
       <Nav></Nav>
-      <Routes>
-        <Route path="/" element={<Login />} />
-        <Route path="search/" element={<Search />} />
-        <Route path="weather/" element={<Weather />} />
-      </Routes>
+      <main className="container mx-auto h-screen grid place-items-center">
+        <Routes>
+          <Route path="/" element={<Login />} />
+          <Route path="search/" element={<Search />} />
+          <Route path="weather/" element={<Weather />} />
+        </Routes>
+      </main>
     </BrowserRouter>
   );
 }
