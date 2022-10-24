@@ -4,10 +4,10 @@ import App from './App';
 import { BrowserRouter, useNavigate } from 'react-router-dom';
 import './index.css';
 import reportWebVitals from './reportWebVitals';
-// import Auth0ProviderWithHistory from './auth/auth0-provider-with-history';
 import { Auth0Provider } from '@auth0/auth0-react';
 import { getConfig } from "./config";
 
+// This is a wrapper for the Auth0Provider to ensure history pushing in our app
 const Auth0ProviderWithRedirectCallback = ({
   children,
   ...props
@@ -39,12 +39,10 @@ const root = ReactDOM.createRoot(document.getElementById('root'));
 root.render(
   <React.StrictMode>
     <BrowserRouter>
-      {/* <Auth0ProviderWithHistory> */}
       <Auth0ProviderWithRedirectCallback {...providerConfig}
       >
         <App />
       </Auth0ProviderWithRedirectCallback>
-      {/* </Auth0ProviderWithHistory> */}
     </BrowserRouter>
   </React.StrictMode>
 );

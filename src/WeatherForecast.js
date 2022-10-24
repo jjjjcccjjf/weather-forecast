@@ -6,8 +6,12 @@ import { useAuth0 } from "@auth0/auth0-react"
 
 export default function WeatherForecast({ searchQuery }) {
     const [weather, setWeather] = useState({})
+    // TODO: Store API key to environment variables!
     const key = "5c9d2b871d7e4476ad884441222410"
     const [isLoading, setIsLoading] = useState(false);
+
+    // Force redirect for unauthenticated users
+    // TODO: Refactor into Auth0 ProtectedRoutes. See (https://auth0.com/blog/complete-guide-to-react-user-authentication/#Protecting-Routes)
     const navigate = useNavigate()
     const { isAuthenticated } = useAuth0()
     useEffect(() => {
@@ -15,10 +19,12 @@ export default function WeatherForecast({ searchQuery }) {
             navigate("/")
         }
     }, [])
+    // end Force redirect for unauthenticated users
 
     useEffect(() => {
         if (searchQuery) {
             setIsLoading(true)
+            // TODO: Refactor to SWR
             fetch("http://api.weatherapi.com/v1/current.json?key=" + key + "&q=" + searchQuery + "&aqi=no")
                 .then(res => res.json())
                 .then(res => {
@@ -81,6 +87,5 @@ export default function WeatherForecast({ searchQuery }) {
 
         </section>
     )
-
 
 }

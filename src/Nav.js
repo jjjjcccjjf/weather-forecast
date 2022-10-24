@@ -1,6 +1,7 @@
 import { useAuth0 } from "@auth0/auth0-react"
 import { NavLink } from "react-router-dom"
 
+// Boilerplate code for Auth0 logout button
 function LogoutButton() {
     const {
         isAuthenticated,
@@ -13,10 +14,9 @@ function LogoutButton() {
         }}>Log out</button>
     );
 }
-
+// end Boilerplate code for Auth0 logout button
 
 export default function Nav() {
-
     const { isAuthenticated } = useAuth0()
 
     return <>
